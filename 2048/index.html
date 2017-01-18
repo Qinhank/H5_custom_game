@@ -1,0 +1,511 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>参与游戏赢大奖</title>
+
+  <link href="style/main.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="meta/apple-touch-icon.png">
+  <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone 5+ -->
+  <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x920.png"  media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone, retina -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <!-- <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=2.0, maximum-scale=1, user-scalable=no, minimal-ui"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <style>
+    .above_game{display: none !important}
+    #gift{
+      display: none;
+      position: absolute;
+      bottom: 17%;
+      left: 20px;
+      z-index: 9999;
+    }
+    #start{
+        height: 80%;
+        width: 90%;
+        position: absolute;
+        background: rgba(0,0,0,0.6);
+        border-radius: 30px;
+        overflow: scroll;
+        z-index: 99999;
+        color: white;
+        font-size: 14px;
+    }
+    i{font-style:normal;color: red;}
+    #start span{margin-left: 15px;display: block;}
+    #start h2{
+        margin-top: 10px;
+        font-size: 17px;
+        border-bottom: 1px solid white;
+        padding-bottom: 10px;
+        width: 70%;
+        height: 5%;
+        margin-left: 15px;
+        color: white;
+        margin-bottom: 5px;
+    }
+    .start_bus,.start_pla{
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 15px;
+    }
+    .start_bus span,.start_pla span{
+        display: block;
+        margin-left: 15px;
+    }
+    .com_photo{
+        padding: 15px 15px 0 15px;
+        margin: 0 auto;
+        height: 85px;
+        overflow-x: scroll;
+        text-align-last: center;
+    }
+    .com_photo span{
+        width: 50px;
+        display: inline-block !important;
+        height: 70px;
+        font-size: 12px;
+        color: rgba(255,255,255,0.6);
+    }
+    #startgame{display: block;margin:0 auto;width: 60%;height: 50px;border-radius:10px;background-color: #ffa700;text-align: center;line-height: 50px;margin-top:10px;font-size: 25px;}
+    #startstate{
+        height: 85%;
+        overflow: scroll;
+    }
+    #end{
+      position: absolute;
+      width: 90%;
+      height: 80%;
+      border-radius: 30px;
+      text-align: center;
+      background-color: rgba(0,0,0,0.6);
+      z-index: 999;
+      color: white;
+    }
+    #end span:nth-of-type(1){
+      display: inline-block;
+      width: 90%;
+      font-size: 20px;
+    }
+    #show_gift{
+      display: none;
+    }
+    #show_gift span:nth-of-type(1){
+      display: inline-block;
+      margin-top: 30px;
+      font-size: 20px;
+      width: 90%;
+    }
+    #end a:nth-of-type(1){
+      line-height: 40px;
+      left: 20%;
+      position: absolute;
+      width: 29%;
+      z-index: 99;
+      text-decoration: none;
+      text-align: center;
+      font-size: 18px;
+      height: 40px;
+      border-radius: 10px;
+      background-color: #ffa700;
+      color: white;
+    }
+    #end a:nth-of-type(2){
+      line-height: 40px;
+      right: 20%;
+      position: absolute;
+      width: 29%;
+      z-index: 99;
+      text-decoration: none;
+      text-align: center;
+      font-size: 18px;
+      height: 40px;
+      border-radius: 10px;
+      background-color: #ffa700;
+      color: white; 
+    }
+    #end a:nth-of-type(3){
+      line-height: 50px;
+      left: 20%;
+      position: absolute;
+      width: 60%;
+      z-index: 10;
+      text-decoration: none;
+      text-align: center;
+      font-size: 25px;
+      height: 50px;
+      border-radius: 10px;
+      background-color: #ffa700;
+      color: white;
+    }
+    #charts{
+        position: absolute;
+        top: 0;
+        width: 100%;
+        background-color: rgba(0,0,0,0.7);
+        color: white;
+        display: none;
+        z-index: 998;
+    }
+    #charts .charts_con{padding: 15px 10px;}
+    #phbtable{
+        width: 100%;
+        height: 520px;
+        display: block;
+        overflow: scroll;
+    }
+    #phbtable tr{height: 50px;line-height: 50px;width: 100%;display: inline-flex;}
+    #phbtable tr th {
+        width: 10%;
+        margin: 0 auto;
+        padding-bottom: 5px;
+    }
+    #phbtable tr th img{
+        position: relative;
+        left: 0;
+        border-radius: 100%;
+    }
+    #phbtable tr td {
+    width: 25%;
+    margin: 0 auto;
+    padding-bottom: 5px;
+    text-align: center;
+    }
+  </style>
+</head>
+
+
+
+
+<!-- <script>
+lastScrollY=0;
+function heartBeat(){
+var diffY;
+if (document.documentElement && document.documentElement.scrollTop)
+    diffY = document.documentElement.scrollTop;
+else if (document.body)
+    diffY = document.body.scrollTop
+else
+    {/*Netscape stuff*/}
+percent=.1*(diffY-lastScrollY);
+if(percent>0)percent=Math.ceil(percent);
+else percent=Math.floor(percent);
+//window.setInterval("heartBeat()",1);
+</script> -->
+<body>
+  <div id="gift"><img src="gift38.gif" width="50%" height="50%"></div>
+  <div id="charts" class="Explain" >
+      <div class="charts_con">当前排名：（只显示前50名）</div>
+      <span id="close_phb" onclick="phb_close()" style="position: absolute;top: 5px;right: 5px;z-index: 999;">关闭</span>
+      <table id="phbtable" cellpadding="0" cellspacing="0">
+          <tr>
+              <th>排行</th>
+              <th>头像</th>
+              <th>昵称</th>
+              <th>成绩</th>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+          <tr>
+              <td>NO.1</td>
+              <td><img src="t0112104234e3d91aa4.png" widtd="40px" height="40px"></td>
+              <td>张三</td>
+              <td>99</td>
+          </tr>
+      </table>
+  </div>
+  <div id="start">
+        <div id="startstate">
+            <h2>游戏说明</h2>
+            <div class="start_content">
+                <div class="start_bus">
+                    <span>游戏结束后平台奖励：</span>
+                    <span><i>一等奖：</i>这里是商品或钱豆数量</span>
+                    <span><i>二等奖：</i>这里是商品或钱豆数量</span>
+                    <span><i>三等奖：</i>这里是商品或钱豆数量</span>
+                    <span><i>参与奖：</i>这里是商品或钱豆数量</span>
+                </div>
+                <div class="start_pla">
+                    <span>游戏结束后商家奖励:</span>
+                    <span><i>一等奖：</i>这里是商品或钱豆数量</span>
+                    <span><i>二等奖：</i>这里是商品或钱豆数量</span>
+                    <span><i>三等奖：</i>这里是商品或钱豆数量</span>
+                    <span><i>参与奖：</i>这里是商品或钱豆数量</span>
+                </div>
+                <span>商家奖品总数量：<i>1000000</i></span>
+                <span>商家奖品数量排名：<i>NO.1</i></span>
+                <div class="com_photo">
+                    <span><img src="t0112104234e3d91aa4.png" width="50px" height="50px">要四个字</span>
+                    <span><img src="t0112104234e3d91aa4.png" width="50px" height="50px">要四个字</span>
+                    <span><img src="t0112104234e3d91aa4.png" width="50px" height="50px">要四个字</span>
+                    <span><img src="t0112104234e3d91aa4.png" width="50px" height="50px">要四个字</span>
+                    <span><img src="t0112104234e3d91aa4.png" width="50px" height="50px">要四个字</span>
+                    <span><img src="t0112104234e3d91aa4.png" width="50px" height="50px">要四个字</span>
+                    <span><img src="t0112104234e3d91aa4.png" width="50px" height="50px">要四个字</span>
+                    <span><img src="t0112104234e3d91aa4.png" width="50px" height="50px">要四个字</span>
+                    <span><img src="t0112104234e3d91aa4.png" width="50px" height="50px">要四个字</span>
+                </div>
+                <span>游戏操作说明：<br>游戏中可以上下左右其中一个方向去滑动，每滑动一次，所有的方块都会往滑动的方向靠拢外，系统也会在空白的地方乱数出现一个方块，相同的方块在靠拢、相撞时会相加。系统给予的方块不是寄生动物就是低级爬行动物。当游戏中相加得到外星人时即获得胜利。</span>
+            </div>
+        </div>  
+        <div id="startgame">开始游戏</div>
+    </div>
+ 
+  <div class="container">
+    <div class="heading">
+      <h1 class="title">丰海夺宝赢大礼</h1>
+      <div class="scores-container">
+        <div class="score-container">0</div>
+        <div class="best-container">0</div>
+      </div>
+    </div>
+    <div class="above_game">
+      <p class="game-intro"><a href="#" target="_blank"><img src="140x50.png" width="140" height="50" longdesc="http://game2.id87.com/"></a></p><!--此处可改成你们自己的链接-->
+      <a class="restart-button">点我开始</a>
+    </div>
+    <div class="game-container">
+      <div class="game-message">
+        <p></p>
+        <div class="lower">
+	        <a class="keep-playing-button">Keep going</a>
+          <div class="retry-button">
+              <div id="end">
+              <h2>游戏结束</h2>
+              <span>您获得由<i>xxx</i>提供的代金券一张以及我们赠送的<i>3</i>个钱豆</span>
+              <div id="show_gift">
+                <span>您在游戏中意外获得由<i>xxx</i>提供的礼物：</span>
+                <span><img src="1024.png" width="70px" height="70px"></span>
+              </div>
+              <a id="backto" class="backto" href="#">返回首页</a>
+              <a id="phb" class="phb" href="javascript:void(0)">排行榜</a>
+              <a id="again" class="tryag">再玩一次</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-container">
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+      </div>
+
+      <div class="tile-container">
+
+      </div>
+    </div>
+</div>
+
+  <script src="js/bind_polyfill.js"></script>
+  <script src="js/classlist_polyfill.js"></script>
+  <script src="js/animframe_polyfill.js"></script>
+  <script src="js/keyboard_input_manager.js"></script>
+  <script src="js/html_actuator.js"></script>
+  <script src="js/grid.js"></script>
+  <script src="js/tile.js"></script>
+  <script src="js/local_storage_manager.js"></script>
+  <script src="js/game_manager.js"></script>
+  <script src="js/application.js"></script>
+  <script src="js/jquery-3.1.1.min.js"></script>
+// <script><!--此处可分值和等级名称-->
+//     var my_list = {2:'九头虫',4:'白龙马',8:'沙僧',16:'猪八戒',32:'孙悟空',64:'唐僧',128:'观音',256:'弥勒佛',512:'上老君',1024:'如来佛',2048:'神笔记',4096:'http://iduanzi.qiniudn.com/tuoguang/4096.jpg',8192:'http://iduanzi.qiniudn.com/tuoguang/8192.jpg',16384:'http://iduanzi.qiniudn.com/tuoguang/16384.jpg',32768:'32768',65536:'65536',131072:'131072',262144:'262144',524288:'524288',1048576:'1048576',2097152:'2097152',4194304:'4194304',8388608:'8388608',16777216:'16777216',33554432:'33554432',67108864:'67108864',134217728:'134217728',268435456:'268435456',536870912:'536870912',1073741824:'1073741824',2147483648:'2147483648'}
+//     var my_mark = {2:'快来变身吧！',4:'小白马就挂了！',8:'沙和尚，是你吗',16:'对小猪就是你！',32:'悟空，等等我！',64:'打雷啦，收衣服啦',128:'普渡众生！',256:'阿弥托福！',512:'你这泼猴，不像话！',1024:'五指山压死你',2048:'恭喜！终于见到本尊了！ ',4096:'强者！太伟大了！',8192:'你有这么厉害呀！',16384:'你已跳出三界之外了！',32768:'Game Over, HiScore: 32768',65536:'Game Over, HiScore: 65536',131072:'Game Over, HiScore: 131072',262144:'Game Over, HiScore: 262144',524288:'Game Over, HiScore: 524288',1048576:'Game Over, HiScore: 1048576',2097152:'Game Over, HiScore: 2097152',4194304:'Game Over, HiScore: 4194304',8388608:'Game Over, HiScore: 8388608',16777216:'Game Over, HiScore: 16777216',33554432:'Game Over, HiScore: 33554432',67108864:'Game Over, HiScore: 67108864',134217728:'Game Over, HiScore: 134217728',268435456:'Game Over, HiScore: 268435456',536870912:'Game Over, HiScore: 536870912',1073741824:'Game Over, HiScore: 1073741824',2147483648:'Game Over, HiScore: 2147483648'}
+    var my_goal = 1024;
+    var get_gift = 0;//点击礼物即可获得礼物，获得礼物参数为1
+    var W = document.documentElement.clientWidth;
+    var H = document.documentElement.clientHeight;
+    var start = document.getElementById('start');
+    var start_H = start.offsetHeight;
+    var start_W = start.offsetWidth;
+    var end = document.getElementById('end');
+    var end_H = end.offsetHeight;
+    var end_W = end.offsetWidth;
+    $(".grid-row .grid-cell").css({
+      "width":W/4 - 15.4 + "px",
+      "height":W/4 - 15.4 + "px"
+    });
+    $(".game-container").css({
+      "margin-top":(H-W)/2 + "px",
+      "height":W + "px"
+    });
+    $(".tile-container").css({
+      "height":W*0.95 + "px"
+    });
+    $("#gift").click(function(){
+      $("#gift").css("display","none");
+      $("#show_gift").css("display","block");
+      gift=0;
+      get_gift=1;
+    });
+    $("#startgame").click(function(){
+      $("#start").css("display","none");
+    });
+    // $(".game-container .game-message a").css({
+    //   "top":-(H-W)/2-55+"px"
+    // });
+    $("#end").css({
+      "width":W*0.9 + "px",
+      "height":H*0.8 + "px",
+      "top": -(H-W)/2 + "px",
+      "left":(W-W*0.9)/2 + "px"
+    });
+    $("#phbtable").css({
+      "height":H - 50 + "px"
+    });
+    function phb_close(){
+      $("#end").css("display","block");
+      $("#charts").css("display","none");
+    }
+    start.style.top = (H-start_H)/2 + "px";
+    start.style.left = (W-start_W)/2 + "px";
+    document.getElementById('again').style.bottom=(H-H*0.8)/2+30+"px";
+    document.getElementById('backto').style.bottom=(H-H*0.8)/2+90+"px";
+    document.getElementById('phb').style.bottom=(H-H*0.8)/2+90+"px";
+  </script>
+
+</body>
+</html>
